@@ -1,5 +1,3 @@
-
-
 # MiddlewareEnv
 
 ## 0x01 tomcat 8.5.21
@@ -13,10 +11,23 @@ docker pull tomcat:8.5.21
 ### jsp源码
 
 ```jsp
+<%@ page import="java.io.*,java.util.*" contentType="text/html" %>
 <%
-    out.println("charseki.chen@dbappsecurity.com.cn");
-    out.println("\n\n");
-    out.println(request.getParameter("a"));
+out.println("charseki.chen@dbappsecurity.com.cn\n\n");
+out.println("--------------------- Headers -----------------\n");
+Enumeration headerNames = request.getHeaderNames();
+while(headerNames.hasMoreElements()) {
+    String paramName = (String)headerNames.nextElement();
+    String paramValue = request.getHeader(paramName);
+    out.println("["+paramName+"]"+" => "+paramValue);
+}
+out.println("\n");
+out.println("--------------------- Request -----------------\n");
+Enumeration paramsNames = request.getParameterNames();
+while(paramsNames.hasMoreElements()) {
+    String paramsName = (String)paramsNames.nextElement();
+    String paramsValue = request.getParameter(paramsName);
+    out.println("["+paramsName+"]"+" => "+paramsValue);}
 %>
 ```
 
@@ -27,15 +38,25 @@ http://test.env.com:1111/charseki.jsp
 ### 请求示例
 
 ```
-POST /charseki.jsp HTTP/1.1
+POST /charseki.jsp HTTP/1.0
 Host: test.env.com:1111
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 13
+Content-Length: 107
+Transfer-Encoding: chunked
 
-a=hello world
+2;&a=1 union select 1,2,3,4&
+na
+3;FyWNtf5IdLw
+me=
+2;s46FzpfpSVIZMW
+11
+2;MvNiVgkdUiltG6ABB4
+11
+0
+
 ```
 
-![image-20230217134247709](static/img/63ef13dbf144a010071d93f8.png)
+![image-20230217134247709](static/img/63f42c18f144a01007c3e713.png)
 
 ## 0x02 tomcat 10.0.14
 
@@ -48,10 +69,23 @@ docker pull tomcat:10.0.14
 ### jsp源码
 
 ```jsp
+<%@ page import="java.io.*,java.util.*" contentType="text/html" %>
 <%
-    out.println("charseki.chen@dbappsecurity.com.cn");
-    out.println("\n\n");
-    out.println(request.getParameter("a"));
+out.println("charseki.chen@dbappsecurity.com.cn\n\n");
+out.println("--------------------- Headers -----------------\n");
+Enumeration headerNames = request.getHeaderNames();
+while(headerNames.hasMoreElements()) {
+    String paramName = (String)headerNames.nextElement();
+    String paramValue = request.getHeader(paramName);
+    out.println("["+paramName+"]"+" => "+paramValue);
+}
+out.println("\n");
+out.println("--------------------- Request -----------------\n");
+Enumeration paramsNames = request.getParameterNames();
+while(paramsNames.hasMoreElements()) {
+    String paramsName = (String)paramsNames.nextElement();
+    String paramsValue = request.getParameter(paramsName);
+    out.println("["+paramsName+"]"+" => "+paramsValue);}
 %>
 ```
 
@@ -62,15 +96,26 @@ http://test.env.com:2222/charseki.jsp
 ### 请求示例
 
 ```
-POST /charseki.jsp HTTP/1.1
+POST /charseki.jsp HTTP/1.0
 Host: test.env.com:2222
 Content-Type: application/x-www-form-urlencoded
-Content-Length: 13
+Content-Length: 107
+Transfer-Encoding: chunked
 
-a=hello world
+2;&a=1 union select 1,2,3,4&
+na
+3;FyWNtf5IdLw
+me=
+2;s46FzpfpSVIZMW
+11
+2;MvNiVgkdUiltG6ABB4
+11
+0
+
+
 ```
 
-![image-20230217134338922](static/img/63ef140cf144a010071dd698.png)
+![image-20230217134338922](static/img/63f42cc0f144a01007c502de.png)
 
 ## 0x03 springboot+tomcat
 
