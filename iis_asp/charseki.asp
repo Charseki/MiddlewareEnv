@@ -1,6 +1,6 @@
 <%
 	Response.Write("charseki.chen@dbappsecurity.com.cn")
-	Response.Write(CHR(10) & CHR(10)
+	Response.Write(CHR(10) & CHR(10))
                  
     //打印Headers信息
 	Response.Write("---------------- Headers ----------------" & CHR(10) & CHR(10))
